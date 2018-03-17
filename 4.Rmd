@@ -1,0 +1,57 @@
+---
+title: "contribution"
+output: html_notebook
+---
+
+```{r setup}
+library(readxl)
+xlM <- read_excel("Book4.xlsx", range = "a10:a46")
+xlF <- read_excel("Book4.xlsx", range = "b10:b34")
+
+dfM = c(xlM$Male)
+dfF = c(xlF$Female)
+```
+
+## 2. assuming non equal variance, use 2 samples T test with non equal variances
+### assumption
+H0: variance of male and variance of female is equal.  
+H1: not H0.  
+significant level: 5%  
+
+```{r}
+var.test(dfM, dfF)
+```
+P (0.08738) is greater than 5%.  H0 is not rejected.  
+
+### assumption
+H0: mean of male and mean of female is equal.  
+H1: not H0.  
+significant level: 5%  
+
+```{r}
+t.test(dfM, dfF)
+```
+P (0.002825) is less than 5%.  H0 is rejected.
+
+### assumption
+H0: mean of male and mean of female is equal.  
+H1: mean of male is larger than mean of female.  
+significant level: 5%  
+
+```{r}
+t.test(dfM, dfF, alternative = "greater")
+```
+P (0.001412) is less than 5%.  H0 is rejected.
+
+### assumption
+H0: mean of male and mean of female is equal.  
+H1: mean of male is smaller than mean of female.  
+significant level: 5%  
+
+```{r}
+t.test(dfM, dfF, alternative = "less")
+```
+P (0.9986) is greater than 5%.  H0 is not rejected.
+
+## conclusion
+mean of bonus for male is larger than female one.
